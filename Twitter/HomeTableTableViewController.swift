@@ -21,6 +21,11 @@ class HomeTableTableViewController: UITableViewController {
         tableView.refreshControl = myRefreshControl
     }
     
+    override func viewDidAppear(_ animated: Bool){
+        super.viewDidAppear(animated)
+        self.loadTweet()
+    }
+    
     @objc func loadTweet(){
         numberOfTweets = 20
         let myUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
@@ -33,7 +38,9 @@ class HomeTableTableViewController: UITableViewController {
                 self.tweetArray.append(tweet)
             }
             
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
             self.myRefreshControl.endRefreshing()
         }, failure: { Error in
             print("Could not retrieve tweet")
@@ -55,7 +62,9 @@ class HomeTableTableViewController: UITableViewController {
                 self.tweetArray.append(tweet)
             }
             
+    
             self.tableView.reloadData()
+            
             self.myRefreshControl.endRefreshing()
         }, failure: { Error in
             print("Could not retrieve tweet")
@@ -90,6 +99,12 @@ class HomeTableTableViewController: UITableViewController {
         if let imageData = data{
             cell.profileImage.image = UIImage(data: imageData)
         }
+        
+        cell.setFavorite(tweetArray[indexPath.row]["favorited"] as! Bool)
+        cell.tweetId = tweetArray[indexPath.row]["id"] as! Int
+        cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as! Bool)
+        
+        
         return cell
     }
     override func numberOfSections(in tableView: UITableView) -> Int {
