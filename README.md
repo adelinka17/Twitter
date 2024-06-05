@@ -4,8 +4,8 @@ This is a basic twitter app to view, compose, favorite, and retweet tweets.
 ## User Stories
 
 - User can compose a tweet
-- User can favorite a tweet. (4pts)
-- [ User can retweet a tweet. (2pts)
+- User can favorite a tweet. 
+- User can retweet a tweet
 
 
 
